@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.talha.notepad.R
 import com.talha.notepad.WordViewModel
 import com.talha.notepad.room.Notes
+import com.talha.notepad.ui.EditNoteFragment
 import com.talha.notepad.ui.MainActivity
-import com.talha.notepad.utils.editNoteFragment
 
 
 class WordListAdapter(var activity: MainActivity, var viewModel: WordViewModel) :
@@ -28,9 +28,8 @@ class WordListAdapter(var activity: MainActivity, var viewModel: WordViewModel) 
         val current = getItem(position)
         holder.bind(current)
         holder.itemView.setOnClickListener {
-            viewModel.forEditItem(current)
 
-            activity.showFragment(editNoteFragment).let {
+            activity.loadFragment(EditNoteFragment()).let {
                 viewModel.setCurrentNote(current)
             }
         }

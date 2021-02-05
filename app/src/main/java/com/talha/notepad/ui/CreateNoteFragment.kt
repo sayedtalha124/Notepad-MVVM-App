@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.talha.notepad.*
 import com.talha.notepad.databinding.FragmentCreateNoteBinding
 import com.talha.notepad.room.Notes
-import com.talha.notepad.utils.homeFragment
-import com.talha.notepad.utils.showFragment
+import com.talha.notepad.utils.loadFragment
 import com.talha.notepad.utils.snackBar
 
 
@@ -35,7 +34,7 @@ class CreateNoteFragment : Fragment(R.layout.fragment_create_note) {
                 val note = Notes(word)
                 editWordView.text.clear()
                 viewModel.insert(note).let {
-                    requireActivity().showFragment(homeFragment)
+                    requireActivity().loadFragment(HomeFragment())
                 }
             }
 

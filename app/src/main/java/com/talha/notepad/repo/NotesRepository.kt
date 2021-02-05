@@ -6,7 +6,7 @@ import com.talha.notepad.room.NotesDao
 import kotlinx.coroutines.flow.Flow
 
 
-class WordRepository(private val wordDao: NotesDao) {
+class NotesRepository(private val wordDao: NotesDao) {
 
 
     // Room executes all queries on a separate thread.

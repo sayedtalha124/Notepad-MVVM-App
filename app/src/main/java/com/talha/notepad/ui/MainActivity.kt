@@ -1,72 +1,83 @@
 package com.talha.notepad.ui
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.talha.notepad.*
+import com.talha.notepad.R
 import com.talha.notepad.databinding.ActivityMainBinding
-import com.talha.notepad.utils.createNoteFragment
-import com.talha.notepad.utils.editNoteFragment
-import com.talha.notepad.utils.homeFragment
+import com.talha.notepad.utils.SessionManager
+import com.talha.notepad.utils.SessionManager.Companion.isLogin
+import com.talha.notepad.viewBinding
+
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-    private val viewModel: WordViewModel by viewModels {
-        WordViewModelFactory((application as Application).repository)
-    }
+
     private val binding by viewBinding(
         ActivityMainBinding::inflate
     )
 
-    var count = 0
     private val fragmentManager = supportFragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        fragmentManager.beginTransaction().apply {
-            add(R.id.fragment_container, createNoteFragment, "createNote").hide(createNoteFragment)
-            add(R.id.fragment_container, editNoteFragment, "editNote").hide(editNoteFragment)
-            add(R.id.fragment_container, homeFragment, "Home")
-        }.commit()
+
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-            showFragment(createNoteFragment)
+            loadFragment(CreateNoteFragment())
 
         }
+
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (count == 0) {
-                    showFragment(homeFragment)
 
-                    count++
-                } else {
-                    finish()
-
-                }
 
             }
         })
-        showFragment(homeFragment)
+        val sessionManager = SessionManager(this)
+
+        if (sessionManager.getBoolValue(isLogin))
+            loadFragment(HomeFragment())
+        else
+            loadFragment(LoginFragment())
+
     }
 
-    var activeFragment: Fragment = homeFragment
+    override fun onBackPressed() {
 
-    fun showFragment(fragment: Fragment) {
-        if (fragment == homeFragment) {
-            binding.fab.visibility = View.VISIBLE
+        val fragment = fragmentManager.findFragmentById(R.id.fragment_container)
+
+        if (fragment is HomeFragment || fragment is LoginFragment) {
+            //  fab.snackBar("Press again to exit")
+            finish()
         } else {
-            binding.fab.visibility = View.GONE
+            fragmentManager.popBackStack()
+        }
+    }
+
+    fun loadFragment(fragment: Fragment) {
+        if (fragment is CreateNoteFragment) {
+            binding.fab.hide()
+
+        } else {
+            binding.fab.show()
+        }
+        val fragmentData =
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
+        if (fragment is HomeFragment || fragment is LoginFragment) {
+            fragmentData.commit()
+
+        } else {
+
+            fragmentData.addToBackStack(
+                null
+            ).commit()
 
         }
 
-// I did not use beginTransaction().replace because it will create fragment again.
-// this hide/show method give app a better performance
-        fragmentManager.beginTransaction().hide(activeFragment).show(fragment).commit()
-        activeFragment = fragment
     }
+
 
 }

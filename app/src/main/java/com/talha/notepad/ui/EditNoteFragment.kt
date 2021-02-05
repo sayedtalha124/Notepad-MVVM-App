@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.talha.notepad.*
 import com.talha.notepad.databinding.FragmentEditNoteBinding
 import com.talha.notepad.room.Notes
-import com.talha.notepad.utils.homeFragment
-import com.talha.notepad.utils.showFragment
+import com.talha.notepad.utils.loadFragment
 import com.talha.notepad.utils.snackBar
 
 
@@ -44,7 +43,7 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note) {
                 notes!!.word = word
                 notes?.let { it1 ->
                     viewModel.update(it1).let {
-                        requireActivity().showFragment(homeFragment)
+                        requireActivity().loadFragment(HomeFragment())
                     }
                 }
             }
@@ -55,7 +54,7 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note) {
 
             notes?.let { it1 ->
                 viewModel.delete(it1).let {
-                    requireActivity().showFragment(homeFragment)
+                    requireActivity().loadFragment(HomeFragment())
                 }
             }
 

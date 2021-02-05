@@ -1,11 +1,11 @@
 package com.talha.notepad
 
 import androidx.lifecycle.*
-import com.talha.notepad.repo.WordRepository
+import com.talha.notepad.repo.NotesRepository
 import com.talha.notepad.room.Notes
 import kotlinx.coroutines.launch
 
-class WordViewModel(private val repository: WordRepository) : ViewModel() {
+class WordViewModel(private val repository: NotesRepository) : ViewModel() {
     var getCurrentNote = MutableLiveData<Notes>()
     fun setCurrentNote(note: Notes) {
         getCurrentNote.postValue(note)
@@ -26,16 +26,12 @@ class WordViewModel(private val repository: WordRepository) : ViewModel() {
         repository.delete(it)
     }
 
-    var itemEdit = MutableLiveData<Notes>()
-    fun forEditItem(note: Notes) {
-        itemEdit.postValue(note)
 
-    }
 
 
 }
 
-class WordViewModelFactory(private val repository: WordRepository) : ViewModelProvider.Factory {
+class WordViewModelFactory(private val repository: NotesRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WordViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

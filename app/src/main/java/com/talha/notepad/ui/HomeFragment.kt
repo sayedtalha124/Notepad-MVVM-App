@@ -10,6 +10,7 @@ import com.talha.notepad.*
 import com.talha.notepad.adapter.WordListAdapter
 import com.talha.notepad.databinding.HomeFragmentBinding
 import com.talha.notepad.utils.SpacesItemDecoration
+import com.talha.notepad.utils.toast
 
 class HomeFragment : Fragment(R.layout.home_fragment) {
     private lateinit var viewModel: WordViewModel
@@ -30,7 +31,14 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.addItemDecoration(SpacesItemDecoration())
         viewModel.allWords.observe(viewLifecycleOwner, { words ->
-            words?.let { adapter.submitList(it) }
+            if (words.isEmpty()) {
+                requireContext().toast("No Notes available")
+
+                //viewModel.insert(word)
+            } else {
+                words?.let { adapter.submitList(it) }
+
+            }
         })
     }
 
