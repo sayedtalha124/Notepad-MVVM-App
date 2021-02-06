@@ -54,7 +54,6 @@ public abstract class NotesDatabase : RoomDatabase() {
         }
 
         suspend fun populateDatabase(wordDao: NotesDao) {
-            wordDao.deleteAll()
 
             wordDao.insert(word)
 

@@ -20,7 +20,5 @@ interface NotesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Notes)
 
-    @Query("DELETE FROM word_table")
-    suspend fun deleteAll()
 }
 

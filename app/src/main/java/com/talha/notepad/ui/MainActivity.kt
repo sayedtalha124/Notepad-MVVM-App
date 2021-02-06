@@ -8,7 +8,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.talha.notepad.R
 import com.talha.notepad.databinding.ActivityMainBinding
 import com.talha.notepad.utils.SessionManager
-import com.talha.notepad.utils.SessionManager.Companion.isLogin
 import com.talha.notepad.viewBinding
 
 
@@ -37,11 +36,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         })
         val sessionManager = SessionManager(this)
-
-        if (sessionManager.getBoolValue(isLogin))
-            loadFragment(HomeFragment())
-        else
-            loadFragment(LoginFragment())
+        loadFragment(HomeFragment())
+        /* if (sessionManager.getBoolValue(isLogin))
+             loadFragment(HomeFragment())
+         else
+             loadFragment(LoginFragment())*/
 
     }
 
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     fun loadFragment(fragment: Fragment) {
-        if (fragment is CreateNoteFragment) {
+        if (fragment is CreateNoteFragment || fragment is LoginFragment) {
             binding.fab.hide()
 
         } else {

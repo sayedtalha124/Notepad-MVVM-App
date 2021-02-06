@@ -14,8 +14,8 @@ import com.talha.notepad.ui.EditNoteFragment
 import com.talha.notepad.ui.MainActivity
 
 
-class WordListAdapter(var activity: MainActivity, var viewModel: WordViewModel) :
-    ListAdapter<Notes, WordListAdapter.WordViewHolder>(
+class NotesListAdapter(var activity: MainActivity, var viewModel: WordViewModel) :
+    ListAdapter<Notes, NotesListAdapter.WordViewHolder>(
         WordsComparator()
     ) {
 

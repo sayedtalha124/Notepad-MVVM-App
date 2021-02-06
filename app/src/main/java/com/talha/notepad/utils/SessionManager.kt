@@ -29,13 +29,11 @@ class SessionManager(var ctx: Context) {
     }
 
     companion object {
-        const val USERID = "userId"
         private const val PRIVATE_MODE = 0
         private const val PREFERENCE_NAME = "Notepad"
         const val USERNAME = "Name"
         const val EMAIL = "email"
         const val userPhoto = "userPhoto"
-        const val Location = "Location"
         const val isLogin = "isLogin"
 
     }
