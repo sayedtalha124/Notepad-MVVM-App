@@ -1,1 +1,1 @@
-This is a Notepad app build with Android Best Practice Like Data Binding + MVVM + Room database
+This is a Notepad app build with Android Best Practice Like Kotlin Coroutines + Data Binding + MVVM + Room database
